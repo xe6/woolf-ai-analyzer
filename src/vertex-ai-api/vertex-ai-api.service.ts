@@ -1,12 +1,18 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { ConfigService, EnvKeys } from 'src/config';
-import { FilePart, TextPart, VertexAIRequest } from './types';
+import { Part, VertexAIRequest } from './types';
 
 @Injectable()
 export class VertexAiApiService {
   private endpoint: string;
   private authToken: string;
+
+  private logger = new Logger(VertexAiApiService.name);
 
   constructor(
     private readonly configService: ConfigService,
@@ -16,27 +22,12 @@ export class VertexAiApiService {
     this.authToken = this.configService.get(EnvKeys.VERTEX_AUTH_TOKEN);
   }
 
-  public async testVertexApi() {
-    return this._sendRequest(
-      {
-        text: 'You are HR recruiter at Google. Please review the resume and provide feedback. What are candidates key strengths?',
-      },
-      {
-        fileData: {
-          fileUri:
-            'https://cv.djinni.co/83/a7dd759e724fbb648664ac0b2955fa/Max_CV_Oct.pdf',
-          mimeType: 'application/pdf',
-        },
-      },
-    );
-  }
-
-  private async _sendRequest(textPart: TextPart, filePart: FilePart) {
+  private async _sendRequest(parts: Part[]) {
     const payload: VertexAIRequest = {
       contents: [
         {
           role: 'user',
-          parts: [textPart, filePart],
+          parts,
         },
       ],
     };
@@ -53,7 +44,10 @@ export class VertexAiApiService {
       );
       return response.data;
     } catch (err) {
-      console.error(err);
+      this.logger.error(err?.response?.data);
+      throw new InternalServerErrorException(
+        'Failed to send request to Vertex AI.',
+      );
     }
   }
 }

@@ -1,7 +1,7 @@
-export type FilePart = {
-  fileData: {
-    fileUri: string;
-    mimeType: string;
+export type InlineDataPart = {
+  inlineData: {
+    mimeType: 'image/jpeg' | 'image/png'; // only images are supported inline
+    data: string; // >> Base64 encoded
   };
 };
 
@@ -9,13 +9,13 @@ export type TextPart = {
   text: string;
 };
 
-export type Part = FilePart | TextPart;
+export type Part = InlineDataPart | TextPart;
+
+export type VertexAIContent = {
+  role: 'user';
+  parts: Part[];
+};
 
 export type VertexAIRequest = {
-  contents: [
-    {
-      role: 'user';
-      parts: Part[];
-    },
-  ];
+  contents: VertexAIContent[];
 };

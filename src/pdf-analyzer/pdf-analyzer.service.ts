@@ -6,6 +6,6 @@ export class PdfAnalyzerService {
   constructor(private readonly vertexAiApiService: VertexAiApiService) {}
 
   public async testPdfAnalyze() {
-    return this.vertexAiApiService.testVertexApi();
+    return 'To be implemented';
   }
 }
