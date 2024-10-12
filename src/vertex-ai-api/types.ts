@@ -19,3 +19,8 @@ export type VertexAIContent = {
 export type VertexAIRequest = {
   contents: VertexAIContent[];
 };
+
+export type CvJobMatchAnalysisResult = {
+  analysis: string;
+  percentMatch?: number;
+};
