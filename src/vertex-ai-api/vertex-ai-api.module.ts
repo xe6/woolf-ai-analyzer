@@ -5,7 +5,7 @@ import { HttpModule } from '@nestjs/axios';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 7000,
+      timeout: 10000,
     }),
   ],
   providers: [VertexAiApiService],
