@@ -61,7 +61,7 @@ export class VertexAiApiService {
       .map((p: TextPart) => p.text || '')
       .join('');
 
-    // >> Extract the percentage match from the analysis result
+    // >> Extract the percentage from the analysis result
     const percentageExcerpt = result.match(/Percentage match:\s*(\d+)%/);
     if (percentageExcerpt) {
       const percentage = parseInt(percentageExcerpt[1], 10);
