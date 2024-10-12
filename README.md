@@ -6,7 +6,7 @@ Returns the response in this format:
 
 ```json
 {
-    "analysis": "AI breakdown",
+    "analysis": "Result of AI analysis",
     "percentMatch": 50
 }
 
@@ -60,12 +60,24 @@ This request should include two PDF files submitted via multipart/form-data:
 
 > There is no need to specify the order of the files, as the AI will automatically determine which file is the job description and which one is the candidate’s CV.
 
+For your convenience, you can find two PDF files in `sample-data` directory to test the API:
 
-#### cUrl request
+- `sample-data/NodeJS_Developer_Job_Description.pdf` - Dummy Job Description
+- `sample-data/Software_Engineer_CV.pdf` - Dummy CV
+
+#### curl request
 ```sh
 curl -X POST http://localhost:3030/pdf-analyzer/cv-job-match \
   -F "files=@/path/to/your/cv.pdf" \
   -F "files=@/path/to/your/job-description.pdf"
+```
+
+with sample data files:
+```sh
+# Assuming you are in the project root directory
+curl -X POST http://localhost:3030/pdf-analyzer/cv-job-match \
+  -F "files=@./sample-data/NodeJS_Developer_Job_Description.pdf" \
+  -F "files=@./sample-data/Software_Engineer_CV.pdf"
 ```
 
 #### Swagger OpenAPI UI
@@ -85,6 +97,8 @@ You can also use Swagger UI to upload the files and execute the request.
 ## Notes on technical implementation
 
 - The hosted API endpoint does not support static links to PDF files, as it only accepts file URIs in the `gs://` schema (for Google Cloud Storage files within the context of a GCP project). To work around this limitation, I used `InlineDataPart`, which handles base64-encoded images only.
+
+- While I could technically just extract text from PDF and use `TextPart` to process the VertexAI request, I opted to work with images instead. This approach ensures compatibility with all possible variations of CVs and job descriptions, which may contain not only text but also various graphics, icons, etc.
 
 - File uploads are managed by converting PDF files into images (one image per PDF page) using the `pdf2pic` library. This library requires `GraphicsMagick` and `Ghostscript` as system dependencies. To simplify the developer experience (DX), I included a `Dockerfile` that handles these dependencies, allowing the API application to be built and run without requiring local installation of the underlying dependencies.
 

@@ -38,12 +38,13 @@ export class VertexAiApiService {
     images: string[],
   ): Promise<CvJobMatchAnalysisResult> {
     const textPart: TextPart = {
-      text: `You are a company recruiter. Given a set of images, representing candidate CV and job description 
-      (figure out which images belongs to what type of document), provide your feedback on the match between the 
-      candidate CV and the job description, identifying the candidate's strengths and weaknesses, and whether the 
-      candidate is a good fit for the job. Also, please provide a percentage match in the end of the response string 
-      in this format: <Percentage match: x%>, where x is calculated match percentage. Note: When calculating the percentage, 
-      avoid being too lenient, and don't hesitate to give a low percentage if the match is poor.`,
+      text: `You are a company recruiter. Given a set of images representing a candidate’s CV and a job description 
+      (identify which image corresponds to each document), 
+      analyze the match between the candidate’s qualifications and the job requirements. 
+      Provide feedback on the candidate’s strengths, weaknesses, and overall fit for the role. 
+      Conclude with a percentage match, formatted as: <Percentage match: x%>, where x is the calculated match percentage. 
+      When calculating the percentage, be critical and avoid inflating the score; if the match is poor, give a low percentage. 
+      When constructing percentage match, don't use any additional text formatting.`,
     };
 
     const inlineDataParts: InlineDataPart[] = images.map((image) => ({
