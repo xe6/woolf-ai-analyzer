@@ -31,6 +31,21 @@ docker run -d -p 3030:3030 --name woolf-ai-analyzer-container woolf-ai-analyzer
 #### Alternative option: run locally, without docker
 If you still want to run the API locally without docker, you can install system dependencies on your machine using this documentation: https://github.com/yakovmeister/pdf2image/blob/HEAD/docs/gm-installation.md
 
+After `graphicsmagick` and `ghostscript` are installed on your system:
+
+0. Install `pnpm` (if not installed):
+https://pnpm.io/installation
+
+1. Install packages:
+```sh
+pnpm install
+```
+
+2. Start the service
+```sh
+pnpm start
+```
+
 ---
 ### Usage
 Once the API service is running, you can use `POST` `http://localhost:3030/pdf-analyzer/cv-job-match` endpoint to execute your request, providing two PDF files using multipart-formdata.
