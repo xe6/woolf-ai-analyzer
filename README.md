@@ -96,7 +96,7 @@ You can also use Swagger UI to upload the files and execute the request.
 ---
 ## Notes on technical implementation
 
-- The hosted API endpoint does not support static links to PDF files, as it only accepts file URIs in the `gs://` schema (for Google Cloud Storage files within the context of a GCP project). To work around this limitation, I used `InlineDataPart`, which handles base64-encoded images only.
+- The hosted VertexAI API endpoint does not support static links to PDF files, as it only accepts file URIs in the `gs://` schema (for Google Cloud Storage files within the context of a GCP project). To work around this limitation, I used `InlineDataPart`, which handles base64-encoded images only.
 
 - While I could technically just extract text from PDF and use `TextPart` to process the VertexAI request, I opted to work with images instead. This approach ensures compatibility with all possible variations of CVs and job descriptions, which may contain not only text but also various graphics, icons, etc.
 
