@@ -36,7 +36,7 @@ export class PdfAnalyzerController {
     }),
   )
   @Post('cv-job-match')
-  public async testPdfAnalyzeWithVertexApi(
+  public async analyzeCvJobMatch(
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
     return this.pdfAnalyzerService.analyzeCvJobMatch(files);

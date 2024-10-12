@@ -7,10 +7,6 @@ import { fromBuffer } from 'pdf2pic';
 export class PdfAnalyzerService {
   constructor(private readonly vertexAiApiService: VertexAiApiService) {}
 
-  public async testPdfAnalyze() {
-    return 'To be implemented';
-  }
-
   public async analyzeCvJobMatch(pdfs: Express.Multer.File[]) {
     const pdfToImagesResult = await Promise.all(
       pdfs.map((pdf) => this._convertSinglePdfToB64Images(pdf.buffer)),
